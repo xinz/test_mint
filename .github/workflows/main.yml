@@ -10,7 +10,7 @@ jobs:
       - uses: actions/checkout@v1
 
       - name: Install OTP and Elixir
-        uses: actions/setup-elixir@v1.4
+        uses: ericmj/setup-elixir@patch-2
         with:
           otp-version: "23.0"
           elixir-version: "1.10.3"
@@ -44,7 +44,7 @@ jobs:
       - uses: actions/checkout@v1
 
       - name: Install OTP and Elixir
-        uses: actions/setup-elixir@v1.4
+        uses: ericmj/setup-elixir@patch-2
         with:
           otp-version: ${{matrix.pair.erlang}}
           elixir-version: ${{matrix.pair.elixir}}
