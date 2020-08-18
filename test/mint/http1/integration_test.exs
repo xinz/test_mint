@@ -5,6 +5,8 @@ defmodule Mint.HTTP1.IntegrationTest do
 
   alias Mint.{TransportError, HTTP1}
 
+  require Logger
+
   @moduletag :integration
 
   @port_http 8101
@@ -202,7 +204,7 @@ defmodule Mint.HTTP1.IntegrationTest do
                  transport_opts: [log_alert: false, log_level: :error, reuse_sessions: false]
                )
 
-      IO.puts("ssl test bad certificate reason: #{inspect(reason)}")
+      Logger.error("ssl test bad certificate reason: #{inspect(reason)}")
 
       if reason != :timeout do
         # OTP 21.3 changes the format of SSL errors. Let's support both ways for now.
@@ -222,7 +224,7 @@ defmodule Mint.HTTP1.IntegrationTest do
                  transport_opts: [log_alert: false, log_level: :error, reuse_sessions: false]
                )
 
-      IO.puts("ssl test bad hostname reason: #{inspect(reason)}")
+      Logger.error("ssl test bad hostname reason: #{inspect(reason)}")
 
       if reason != :timeout do
         # OTP 21.3 changes the format of SSL errors. Let's support both ways for now.
