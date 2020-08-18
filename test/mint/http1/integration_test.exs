@@ -24,8 +24,10 @@ defmodule Mint.HTTP1.IntegrationTest do
     end
 
     test "timeout with http" do
+      host = "134.138.177.16"
+      host = "127.0.0.2"
       assert {:error, %TransportError{reason: :timeout}} =
-               HTTP1.connect(:http, "localhost", @port_http, transport_opts: [timeout: 0])
+               HTTP1.connect(:http, host, @port_http, transport_opts: [timeout: 0])
     end
 
     # TODO: remove check once we depend on OTP 19+
