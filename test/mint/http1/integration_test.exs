@@ -199,12 +199,17 @@ defmodule Mint.HTTP1.IntegrationTest do
 
   describe "badssl.com" do
     test "SSL with bad certificate" do
-      assert {:error, %TransportError{reason: reason}} =
-               HTTP1.connect(:https, "untrusted-root.badssl.com", 443,
-                 transport_opts: [log_alert: false, log_level: :error, reuse_sessions: false]
-               )
 
-      Logger.error("ssl test bad certificate reason: #{inspect(reason)}")
+      # `log_alert: false` deprecated in OTP 22, use {log_level, logging_level()} instead.
+      transport_opts =
+        if System.otp_release() < "22" do
+          [log_alert: false, reuse_sessions: false]
+        else
+          [log_level: :error, reuse_sessions: false]
+        end
+
+      assert {:error, %TransportError{reason: reason}} =
+               HTTP1.connect(:https, "untrusted-root.badssl.com", 443, transport_opts: transport_opts)
 
       if reason != :timeout do
         # OTP 21.3 changes the format of SSL errors. Let's support both ways for now.
@@ -219,12 +224,16 @@ defmodule Mint.HTTP1.IntegrationTest do
     end
 
     test "SSL with bad hostname" do
-      assert {:error, %TransportError{reason: reason}} =
-               HTTP1.connect(:https, "wrong.host.badssl.com", 443,
-                 transport_opts: [log_alert: false, log_level: :error, reuse_sessions: false]
-               )
+      # `log_alert: false` deprecated in OTP 22, use {log_level, logging_level()} instead.
+      transport_opts =
+        if System.otp_release() < "22" do
+          [log_alert: false, reuse_sessions: false]
+        else
+          [log_level: :error, reuse_sessions: false]
+        end
 
-      Logger.error("ssl test bad hostname reason: #{inspect(reason)}")
+      assert {:error, %TransportError{reason: reason}} =
+               HTTP1.connect(:https, "wrong.host.badssl.com", 443, transport_opts: transport_opts)
 
       if reason != :timeout do
         # OTP 21.3 changes the format of SSL errors. Let's support both ways for now.
