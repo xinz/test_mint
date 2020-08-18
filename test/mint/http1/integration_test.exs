@@ -199,7 +199,6 @@ defmodule Mint.HTTP1.IntegrationTest do
 
   describe "badssl.com" do
     test "SSL with bad certificate" do
-
       # `log_alert: false` deprecated in OTP 22, use {log_level, logging_level()} instead.
       transport_opts =
         if System.otp_release() < "22" do
@@ -209,7 +208,9 @@ defmodule Mint.HTTP1.IntegrationTest do
         end
 
       assert {:error, %TransportError{reason: reason}} =
-               HTTP1.connect(:https, "untrusted-root.badssl.com", 443, transport_opts: transport_opts)
+               HTTP1.connect(:https, "untrusted-root.badssl.com", 443,
+                 transport_opts: transport_opts
+               )
 
       if reason != :timeout do
         # OTP 21.3 changes the format of SSL errors. Let's support both ways for now.

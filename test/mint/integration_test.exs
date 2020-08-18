@@ -105,7 +105,6 @@ defmodule Mint.IntegrationTest do
           [log_level: :error, reuse_sessions: false]
         end
 
-
       assert {:error, %TransportError{reason: reason}} =
                HTTP.connect(
                  :https,
