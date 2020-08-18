@@ -24,7 +24,7 @@ defmodule Mint.HTTP1.IntegrationTest do
     end
 
     test "timeout with http" do
-      unused_ip = "127.0.0.2"
+      {:ok, unused_ip} = unused_ip()
       assert {:error, %TransportError{reason: :timeout}} =
                HTTP1.connect(:http, unused_ip, @port_http, transport_opts: [timeout: 0])
     end
@@ -229,4 +229,5 @@ defmodule Mint.HTTP1.IntegrationTest do
                )
     end
   end
+
 end
