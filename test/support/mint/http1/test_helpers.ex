@@ -103,7 +103,7 @@ defmodule Mint.HTTP1.TestHelpers do
   defp unused_ip(a, b, c, d) do
     case :inet.gethostbyaddr({a, b, c, d}) do
       {:ok, _} -> unused_ip(a + 1, b, c, d)
-      {:error, _} -> {:ok, "#{:inet.ntoa({a, b, c, d})}"}
+      {:error, _} -> "#{:inet.ntoa({a, b, c, d})}"
     end
   end
 
