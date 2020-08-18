@@ -202,7 +202,8 @@ defmodule Mint.HTTP1.IntegrationTest do
                  transport_opts: [log_alert: false, log_level: :error, reuse_sessions: false]
                )
 
-      IO.puts "ssl test bad certificate reason: #{inspect reason}"
+      IO.puts("ssl test bad certificate reason: #{inspect(reason)}")
+
       if reason != :timeout do
         # OTP 21.3 changes the format of SSL errors. Let's support both ways for now.
         assert reason == {:tls_alert, 'unknown ca'} or
@@ -221,7 +222,8 @@ defmodule Mint.HTTP1.IntegrationTest do
                  transport_opts: [log_alert: false, log_level: :error, reuse_sessions: false]
                )
 
-      IO.puts "ssl test bad hostname reason: #{inspect reason}"
+      IO.puts("ssl test bad hostname reason: #{inspect(reason)}")
+
       if reason != :timeout do
         # OTP 21.3 changes the format of SSL errors. Let's support both ways for now.
         assert reason == {:tls_alert, 'handshake failure'} or
@@ -234,5 +236,4 @@ defmodule Mint.HTTP1.IntegrationTest do
                )
     end
   end
-
 end
