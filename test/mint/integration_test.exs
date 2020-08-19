@@ -113,11 +113,10 @@ defmodule Mint.IntegrationTest do
                  transport_opts: transport_opts
                )
 
-      if reason != :timeout do
-        # OTP 21.3 changes the format of SSL errors. Let's support both ways for now.
-        assert reason == {:tls_alert, 'unknown ca'} or
-                 match?({:tls_alert, {:unknown_ca, _}}, reason)
-      end
+      # OTP 21.3 changes the format of SSL errors. Let's support both ways for now.
+      assert reason == {:tls_alert, 'unknown ca'} or
+               match?({:tls_alert, {:unknown_ca, _}}, reason) or
+               reason == :timeout
 
       assert {:ok, _conn} =
                HTTP.connect(
@@ -145,11 +144,10 @@ defmodule Mint.IntegrationTest do
                  transport_opts: transport_opts
                )
 
-      if reason != :timeout do
-        # OTP 21.3 changes the format of SSL errors. Let's support both ways for now.
-        assert reason == {:tls_alert, 'handshake failure'} or
-                 match?({:tls_alert, {:handshake_failure, _}}, reason)
-      end
+      # OTP 21.3 changes the format of SSL errors. Let's support both ways for now.
+      assert reason == {:tls_alert, 'handshake failure'} or
+               match?({:tls_alert, {:handshake_failure, _}}, reason) or
+               reason == :timeout
 
       assert {:ok, _conn} =
                HTTP.connect(
